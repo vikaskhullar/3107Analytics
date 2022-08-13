@@ -513,9 +513,12 @@ cars['brand'] = 'Tata'
 
 
 
+s = {2,7,5,9,1}
+s
 
+print(s)
 
-
+s.pop()
 
 
 
