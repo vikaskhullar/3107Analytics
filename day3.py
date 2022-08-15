@@ -571,29 +571,6 @@ n[1,1,0]
 
 
 
-#Array is homogeneous
-
-#Arrays are Indexed
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
