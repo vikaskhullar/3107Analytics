@@ -28,6 +28,14 @@ d
 n1 = np.linspace(0,10, num=5)
 n1
 
+n3 = np.random.randint(1, 10, size=(2, 4,5))
+n3
+
+n3[0]
+n3[1]
+
+n3[1, 1, 2:4]
+
 
 n2 = np.random.randint(1, 10, size=(5,3,3))
 n3 = np.zeros((3,3)).astype('int')
@@ -400,10 +408,7 @@ course = np.random.choice(['BTech', 'MTech', 'MSC', 'BSC'], size=100000)
 city = np.random.choice(['Delhi', 'Mumbai', 'Kolkata', 'Chennai'], size=100000)
 df = pd.DataFrame({'RNo':rno, 'Name':name, 'Gender':gender, 'PMarks':PMarks,'MMarks':MMarks, 'Course':course, 'City':city})
 df
-
 df.to_csv('StudentData.csv')
-
-
 
 
 import pandas as pd
@@ -414,9 +419,6 @@ course = np.random.choice(['BTech', 'MTech', 'MSC', 'BSC'], size=10)
 city = np.random.choice(['Delhi', 'Mumbai', 'Kolkata', 'Chennai'], size=10)
 pd1 = pd.DataFrame({'RNo':rno, 'Name':name, 'Gender':gender, 'Course':course, 'City':city})
 pd1
-
-
-
 
 rno1 = pd.Series(range(6,21))
 PMarks = np.random.randint(0, 100, size=15)
@@ -479,6 +481,215 @@ df.head()
 df.tail()
 df.dropna()
 df.fillna(0)
+
+
+
+
+
+
+import pandas as pd
+rno = pd.Series(range(1,100001))
+name = ['Student'+str(i) for i in range(1,100001)]
+gender = np.random.choice(['Male', 'Female'], size=100000)
+PMarks = np.random.randint(0, 100, size=100000)
+MMarks = np.random.randint(0, 100, size=100000)
+course = np.random.choice(['BTech', 'MTech', 'MSC', 'BSC'], size=100000)
+city = np.random.choice(['Delhi', 'Mumbai', 'Kolkata', 'Chennai'], size=100000)
+student = pd.DataFrame({'RNo':rno, 'Name':name, 'Gender':gender, 'PMarks':PMarks,'MMarks':MMarks, 'Course':course, 'City':city})
+
+student.columns
+
+#'RNo', 'Name', 'Gender', 'PMarks', 'MMarks', 'Course', 'City'
+
+#GroupBy 
+#is taking multiple inputs but generating aggregate outcomes
+
+student = student.drop(['RNo'], axis=1)
+
+student.groupby('Gender').size()
+
+student.groupby(['Gender', 'City']).size()
+
+student.groupby(['City', 'Course', 'Gender']).size()
+
+student.groupby(['City', 'Course', 'Gender', 'PMarks']).aggregate([np.mean])
+
+student.groupby(['City', 'Course', 'Gender']).agg({'MMarks':[np.mean]})
+
+student.groupby(['City', 'Course', 'Gender']).agg({'MMarks':[np.mean, max, min]})
+
+res = student.groupby(['City', 'Course', 'Gender']).agg({'MMarks':[np.mean, max, min, np.std], 'PMarks':[np.mean, max, min, np.std]})
+
+res.to_csv('Result.csv')
+
+
+
+res.to_excel('Result.xlsx')
+
+
+
+
+
+
+#write to more than one sheet in the workbook, it is necessary to specify an ExcelWriter object:
+with pd.ExcelWriter('student.xlsx') as writer:
+    student.to_excel(writer, sheet_name='StudentDetail', index=False)
+    res.to_excel(writer, sheet_name='Result')
+    
+
+xl = pd.ExcelFile('student.xlsx')
+
+sn = xl.sheet_names
+
+sn
+
+sn[1]
+
+df = pd.read_excel('student.xlsx', sn[1]) 
+df
+
+
+
+
+
+
+
+
+
+import pandas as pd
+
+def sdata(s, e, j):
+    rno = pd.Series(range(s,e))
+    name = ['Student'+str(i) for i in range(s,e)]
+    gender = np.random.choice(['Male', 'Female'], size=e-s)
+    PMarks = np.random.randint(0, 100, size=e-s)
+    MMarks = np.random.randint(0, 100, size=e-s)
+    course = np.random.choice(['BTech', 'MTech', 'MSC', 'BSC'], size=e-s)
+    city = np.random.choice(['Delhi', 'Mumbai', 'Kolkata', 'Chennai'], size=e-s)
+    student = pd.DataFrame({'RNo':rno, 'Name':name, 'Gender':gender, 'PMarks':PMarks,'MMarks':MMarks, 'Course':course, 'City':city})
+    student.to_csv('student'+str(j)+'.csv')
+  
+sdata(1, 10, 0)
+    
+sdata(11, 20, 1)
+
+sdata(21, 30, 2)
+
+sdata(21, 30, 3)
+
+sdata(21, 30, 4)
+
+
+
+
+import glob
+files = glob.glob('files/*.csv')
+result = pd.read_csv(files[0])
+
+for fl in files[1:]:
+    df = pd.read_csv(fl)
+    result = pd.merge(result, df, how='outer')
+    
+result.to_csv('result.csv')
+
+
+
+# Denco Case Study
+
+
+df = pd.read_csv('20denco.csv')
+
+df.columns
+
+# 'custname', 'region', 'partnum', 'revenue', 'cost', 'margin'
+
+res = df.groupby(['custname'])['custname'].size()
+
+type(res)
+
+df.groupby(['custname'])['custname'].size().sort_values(ascending=False)
+
+df.groupby(['custname'])['custname'].size().sort_values(ascending=False).head(10)
+
+df.groupby(['custname'])['custname'].size().sort_values(ascending=False).head(10).plot(kind='bar')
+
+
+#Customers with Maximum Total Revenue
+
+res = df.groupby(['custname']).agg({'revenue': np.sum})
+
+type(res)
+
+res
+
+df.head(1)
+df.groupby(['custname']).agg({'revenue': np.sum}).sort_values(by = 'revenue', ascending=False).head(10).plot(kind='bar')
+
+
+# Partnum with Maximum sale
+
+df.groupby(['partnum']).size().sort_values(ascending=False).head(10)
+
+
+#Partnum with Maximum Revenue
+df.groupby(['partnum']).agg({'revenue': np.sum}).sort_values(by = 'revenue', ascending=False).head(10)
+
+
+
+#Matplotlib
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -1,0 +1,10 @@
+,RNo,Name,Gender,PMarks,MMarks,Course,City
+0,1,Student1,Female,32,81,MSC,Kolkata
+1,2,Student2,Female,22,67,BTech,Delhi
+2,3,Student3,Female,92,5,MSC,Chennai
+3,4,Student4,Male,27,83,MTech,Kolkata
+4,5,Student5,Female,34,2,BTech,Kolkata
+5,6,Student6,Female,72,93,BTech,Mumbai
+6,7,Student7,Female,0,29,BSC,Kolkata
+7,8,Student8,Female,79,52,MSC,Kolkata
+8,9,Student9,Male,3,55,MSC,Chennai
