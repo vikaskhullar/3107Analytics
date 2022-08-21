@@ -638,6 +638,19 @@ df.groupby(['partnum']).agg({'revenue': np.sum}).sort_values(by = 'revenue', asc
 
 #Matplotlib
 
+import matplotlib.pyplot as plt
+
+Year = [1920,1930,1940,1950,1960,1970,1980,1990,2000,2010]
+Unemployment_Rate = [9.8,12,8,7.2,6.9,7,6.5,6.2,5.5,6.3]
+Unemployment_Rate1 = [1.8,2,8,4.2,6.0,7,3.5,5.2,7.5,5.3]
+
+plt.plot(Year, Unemployment_Rate)
+plt.title('Year vs Unemployment_Rate')
+
+
+
+
+
 
 
 
