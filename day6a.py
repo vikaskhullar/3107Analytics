@@ -201,7 +201,7 @@ print(classification_report(ytest, ypred))
 
 # HR Anlytics
 
-
+import pandas as pd
 df = pd.read_csv('25_LogR/HRNum.csv')
 df.columns
 x = df.drop(['Attrition'], axis=1).values
@@ -222,15 +222,13 @@ print(classification_report(ytest, ypred))
 
 df['Attrition'].value_counts()
 
+import numpy as np
 from imblearn.over_sampling import SMOTE
 sampler = SMOTE()
 Xr, yr = sampler.fit_resample(x, y)
 
 np.sum(yr==1)
 np.sum(yr==0)
-
-np.sum(y==1)
-np.sum(y==0)
 
 
 from sklearn.model_selection import train_test_split
