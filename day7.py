@@ -526,9 +526,6 @@ from nltk.sentiment.vader import SentimentIntensityAnalyzer
 
 sid = SentimentIntensityAnalyzer()
 
-
-
-
 test1 = "I am good"
 test2 = "This is bad"
 test3 = "Bad worst Bad worst  Bad worst  Bad worst  Bad worst  Bad worst  Do not value students at all, provide the same course at different prices. Make false promises, which are not followed up.Would not recommend."
@@ -541,8 +538,6 @@ scores
 
 scores = sid.polarity_scores(test3)
 scores
-
-
 test4 = "I am happy with the way of teaching the Digital Marketing course by Henry Harvin. The course structure and internship options gave me a lot of knowledge to work as a digital marketer."
 
 scores = sid.polarity_scores(test4)
@@ -553,6 +548,7 @@ test5 = "I had a very worse experience in Henry Harvin. While admission they cla
 
 scores = sid.polarity_scores(test5)
 scores
+
 
 
 
